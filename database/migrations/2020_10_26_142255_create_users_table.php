@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class CreateUsersTable extends Migration
@@ -21,9 +22,12 @@ class CreateUsersTable extends Migration
             $table->tinyInteger('role')->default(1)->comment('角色 1为普通管理员 2为超级管理员');
             $table->tinyInteger('status')->default(1)->comment('状态 1为启用 2为禁用');
             $table->string('permission')->nullable()->comment('权限');
-
+            $table->timestamp('reg_time')->default('CURRENT_TIMESTAMP')->comment('注册时间');
+            $table->char('login_ip', 20)->nullable()->comment('最后登录 IP');
             $table->timestamps();
         });
+
+        DB::statement(/** @lang text */ "ALTER TABLE `shop_users` comment '用户表'");
     }
 
     /**
