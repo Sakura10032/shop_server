@@ -22,7 +22,10 @@ class CreateNavTypesTable extends Migration
             $table->timestamps();
         });
 
-        DB::statement(/** @lang text */ "ALTER TABLE `shop_types` comment '页面类型表'");
+        DB::statement(
+            /** @lang text */
+            "ALTER TABLE `shop_nav_types` comment '页面类型表'"
+        );
     }
 
     /**

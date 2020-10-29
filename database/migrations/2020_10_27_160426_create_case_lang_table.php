@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 class CreateCaseLangTable extends Migration
 {
@@ -20,6 +21,11 @@ class CreateCaseLangTable extends Migration
             $table->char('lang')->comment('语言');
             $table->timestamps();
         });
+
+        DB::statement(
+            /** @lang text */
+            "ALTER TABLE `shop_case_lang` comment '案列语言表'"
+        );
     }
 
     /**

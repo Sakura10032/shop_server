@@ -20,11 +20,14 @@ class CreateUserLogsTable extends Migration
             $table->bigInteger('user_id')->comment('用户ID');
             $table->string('log')->comment('日志内容');
             $table->string('log_data')->comment('日志数据');
-            $table->char('log_data', 20)->comment('IP');
+            $table->char('ip', 20)->comment('IP');
             $table->timestamps();
         });
 
-        DB::statement(/** @lang text */ "ALTER TABLE `shop_user_logs` comment '用户日志表'");
+        DB::statement(
+            /** @lang text */
+            "ALTER TABLE `shop_user_logs` comment '用户日志表'"
+        );
     }
 
     /**

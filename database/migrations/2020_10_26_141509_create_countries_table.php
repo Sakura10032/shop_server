@@ -24,7 +24,10 @@ class CreateCountriesTable extends Migration
             $table->timestamps();
         });
 
-        DB::statement(/** @lang text */ "ALTER TABLE `shop_members` comment '国家地区表'");
+        DB::statement(
+            /** @lang text */
+            "ALTER TABLE `shop_countries` comment '国家地区表'"
+        );
     }
 
     /**

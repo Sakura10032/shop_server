@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 class CreateFilesTable extends Migration
 {
@@ -32,6 +33,11 @@ class CreateFilesTable extends Migration
             $table->tinyInteger('status')->default(1)->comment('状态 1为启用 2为禁用');
             $table->timestamps();
         });
+
+        DB::statement(
+            /** @lang text */
+            "ALTER TABLE `shop_files` comment '下载表'"
+        );
     }
 
     /**

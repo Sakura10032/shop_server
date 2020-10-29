@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 class CreateArticleCategoriesTable extends Migration
 {
@@ -20,6 +21,11 @@ class CreateArticleCategoriesTable extends Migration
             $table->integer('sort')->default(50)->comment('排序');
             $table->timestamps();
         });
+
+        DB::statement(
+            /** @lang text */
+            "ALTER TABLE `shop_article_categories` comment '文章分类表'"
+        );
     }
 
     /**

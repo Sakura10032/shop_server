@@ -28,14 +28,16 @@ class CreateMembersTable extends Migration
             $table->string('pwd')->comment('密码');
             $table->tinyInteger('status')->default(1)->comment('会员状态 1为启用 2为禁用');
             $table->bigInteger('site_id')->comment('站点ID');
-            $table->timestamp('reg_time')->default('CURRENT_TIMESTAMP')->comment('注册时间');
+            $table->timestamp('reg_time')->useCurrent()->comment('注册时间');
             $table->timestamp('login_time')->nullable()->comment('最后登录时间');
             $table->char('reg_ip', 20)->nullable()->comment('注册IP');
             $table->char('login_ip', 20)->nullable()->comment('最后登录 IP');
             $table->timestamps();
         });
 
-        DB::statement(/** @lang text */ "ALTER TABLE `shop_members` comment '会员表'");
+        DB::statement(
+        /** @lang text */
+        "ALTER TABLE `shop_members` comment '会员表'");
     }
 
     /**

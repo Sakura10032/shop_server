@@ -26,7 +26,10 @@ class CreateCodesTable extends Migration
             $table->timestamps();
         });
 
-        DB::statement(/** @lang text */ "ALTER TABLE `shop_members` comment '第三方代码表'");
+        DB::statement(
+            /** @lang text */
+            "ALTER TABLE `shop_codes` comment '第三方代码表'"
+        );
     }
 
     /**

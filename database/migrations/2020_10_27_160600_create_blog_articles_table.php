@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 class CreateBlogArticlesTable extends Migration
 {
@@ -25,6 +26,11 @@ class CreateBlogArticlesTable extends Migration
             $table->integer('sort')->default(50)->comment('排序');
             $table->timestamps();
         });
+
+        DB::statement(
+            /** @lang text */
+            "ALTER TABLE `shop_blog_articles` comment '博客文章表'"
+        );
     }
 
     /**
