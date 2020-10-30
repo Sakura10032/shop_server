@@ -6,7 +6,7 @@ use Illuminate\Foundation\Auth\User as Auth;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Auth implements JWTSubject
+class Member extends Auth implements JWTSubject
 {
     use Notifiable;
 
@@ -43,6 +43,6 @@ class User extends Auth implements JWTSubject
      */
     public function getJWTCustomClaims()
     {
-        return ['role' => 'user'];
+        return ['role' => 'member'];
     }
 }

@@ -36,13 +36,13 @@ return [
     */
 
     'guards' => [
-        'web' => [
-            'driver' => 'session',
-            'provider' => 'users',
-        ],
-
         'api' => [
-            'driver' => 'token',
+            'driver' => 'jwt',
+            'provider' => 'members',
+            'hash' => false,
+        ],
+        'back' => [
+            'driver' => 'jwt',
             'provider' => 'users',
             'hash' => false,
         ],
@@ -66,15 +66,14 @@ return [
     */
 
     'providers' => [
+        'members' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Member::class
+        ],
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\User::class,
-        ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+            'model' => App\Models\User::class,
+        ]
     ],
 
     /*
