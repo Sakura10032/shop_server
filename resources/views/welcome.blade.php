@@ -7,7 +7,7 @@
         <title>Laravel</title>
 
         <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;600&display=swap" rel="stylesheet">
 
         <!-- Styles -->
         <style>
@@ -83,9 +83,6 @@
                 <div class="title m-b-md">
                     Laravel
                 </div>
-
-              <q>11111111</q>
-              <blockquote cite="www.baidu.com">123123</blockquote>
 
                 <div class="links">
                     <a href="https://laravel.com/docs">Docs</a>

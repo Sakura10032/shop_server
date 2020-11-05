@@ -3,27 +3,25 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\AuthorizationRequest;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class AuthController extends Controller
+class AuthorizationRController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login']]);
-
+//        $this->middleware('auth:api', ['except' => ['login']]);
     }
 
     /**
+     * @param AuthorizationRequest $request
      * @return JsonResponse
      */
-    public function login(): JsonResponse
+    public function login(AuthorizationRequest $request): JsonResponse
     {
-        $credentials = request(['email', 'pwd']);
+        $credentials = $request->only(['email', 'password']);
 
-
-        if (! $token = Auth::attempt($credentials)) {
+        if (!$token = auth('api')->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 

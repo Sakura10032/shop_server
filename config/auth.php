@@ -36,16 +36,20 @@ return [
     */
 
     'guards' => [
-        'api' => [
-            'driver' => 'jwt',
-            'provider' => 'members',
-            'hash' => false,
-        ],
-        'back' => [
-            'driver' => 'jwt',
+        'web' => [
+            'driver' => 'session',
             'provider' => 'users',
-            'hash' => false,
         ],
+
+        'api' => [
+            'driver' => 'jwt',  // 默认是 token
+            'provider' => 'users',
+        ],
+        // 新增admins 模块
+        'admin' => [
+            'driver' => 'jwt',
+            'provider' => 'admins',
+        ]
     ],
 
     /*
@@ -66,11 +70,11 @@ return [
     */
 
     'providers' => [
-        'members' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\Member::class
-        ],
         'users' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Member::class,
+        ],
+        'admins' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ]

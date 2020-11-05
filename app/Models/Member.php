@@ -10,13 +10,16 @@ class Member extends Auth implements JWTSubject
 {
     use Notifiable;
 
+    protected $table = 'members';
+    public $timestamps = true;
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'pwd',
+        'email', 'pwd',
     ];
 
     /**
@@ -25,7 +28,7 @@ class Member extends Auth implements JWTSubject
      * @var array
      */
     protected $hidden = [
-        'password',
+        'pwd',
     ];
 
     /**
@@ -43,6 +46,16 @@ class Member extends Auth implements JWTSubject
      */
     public function getJWTCustomClaims()
     {
-        return ['role' => 'member'];
+        return ['role' => 'user'];
+    }
+
+    /**
+     * Get the password for the user.
+     *
+     * @return string
+     */
+    public function getAuthPassword()
+    {
+        return $this->pwd;
     }
 }

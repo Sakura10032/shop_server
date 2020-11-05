@@ -16,7 +16,7 @@ class User extends Auth implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'pwd',
+        'name', 'email', 'password',
     ];
 
     /**
@@ -25,7 +25,7 @@ class User extends Auth implements JWTSubject
      * @var array
      */
     protected $hidden = [
-        'password',
+        'password', 'remember_token',
     ];
 
     /**
@@ -43,6 +43,6 @@ class User extends Auth implements JWTSubject
      */
     public function getJWTCustomClaims()
     {
-        return ['role' => 'user'];
+        return ['role' => 'admin'];
     }
 }

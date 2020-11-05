@@ -17,18 +17,21 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('v1')
     ->namespace('Api')
     ->name('api.v1.')
+    ->middleware('json')
     ->group(static function () {
-        Route::get('index', 'Controller@index')->name('index.index');
+        // 测试路由
+
+        // 用户
         Route::group(['prefix' => 'auth'], function () {
-            Route::post('login', 'AuthController@login');
-            Route::post('logout', 'AuthController@logout');
-            Route::post('refresh', 'AuthController@refresh');
-            Route::post('me', 'AuthController@me')->name('me')->middleware(['jwt.role:user', 'jwt.auth']);
-        });
-        Route::group(['prefix' => 'admin'], function () {
-            Route::post('login', 'LoginController@login');
-            Route::post('logout', 'LoginController@logout');
-            Route::post('refresh', 'LoginController@refresh');
-            Route::post('me', 'LoginController@me')->middleware(['jwt.role:admin', 'jwt.auth'])->name('me');
+            // 用户注册
+            Route::post('register', 'RegisterController@store');
+            // 用户登录
+            Route::post('login', 'AuthorizationRController@login');
+            // 初始化网站
+            Route::get('init', 'InitController@index');
+            // 用户登出
+            Route::get('', 'AuthorizationRController@logout');
+            // 用户刷新 TOKEN
+            Route::put('', 'AuthorizationRController@refresh');
         });
     });

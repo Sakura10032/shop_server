@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\Json;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -61,8 +62,7 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        // 多表jwt验证校验
-        'jwt.role' => \App\Http\Middleware\JWTRoleAuth::class,
+        'json' => Json::class
     ];
 
     /**
