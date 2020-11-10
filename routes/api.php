@@ -20,7 +20,7 @@ Route::prefix('v1')
     ->middleware('json')
     ->group(static function () {
         // 测试路由
-
+        Route::get('test', 'IndexController@index');
         // 用户
         Route::group(['prefix' => 'auth'], function () {
             // 用户注册

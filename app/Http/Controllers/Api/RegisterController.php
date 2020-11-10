@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\RegisterRequest;
 use App\Models\Site;
+use App\Models\User;
 use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 
 class RegisterController extends Controller
 {
@@ -18,10 +20,12 @@ class RegisterController extends Controller
     /**
      * @param RegisterRequest $request
      * @param Site $site
+     * @param User $user
      * @return JsonResponse
      */
-    public function store(RegisterRequest $request, Site $site): JsonResponse
+    public function store(RegisterRequest $request, Site $site, User $user): JsonResponse
     {
+        DB::beginTransaction();
         try {
             $site->mobile = $request->mobile;
             $site->name = $request->site_name;
@@ -29,7 +33,18 @@ class RegisterController extends Controller
             $site->try_time = date("Y-m-d H:i:s", strtotime("+15 day")); // 试用时间 15 天
             $site->reg_ip = $request->getHost();
             $site->save();
+            $user->site_id = $site->id;
+            $user->account = $request->mobile;
+            $user->pwd = bcrypt($request->pwd);
+            $user->role = 2;
+            $user->status = 1;
+            $user->permission = '*';
+            $user->reg_time = date("Y-m-d H:i:s");
+            $user->login_ip = ''; // 默认 ip 为未登录
+            $user->save();
+            DB::commit();
         } catch (Exception $e) {
+            DB::rollBack();
             return response()->json([
                 'message' => $e->getMessage()
             ], 403);

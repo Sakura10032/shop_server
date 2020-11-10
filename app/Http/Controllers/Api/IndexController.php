@@ -1,14 +1,14 @@
 <?php
 
+
 namespace App\Http\Controllers\Api;
+
 
 use App\Http\Controllers\Controller;
 
-class InitController extends Controller
+class IndexController extends Controller
 {
-    //
-    public function index()
-    {
+    public function index () {
 
     }
 }

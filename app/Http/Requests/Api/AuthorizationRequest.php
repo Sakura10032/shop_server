@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Api;
 
-class AuthorizationRequest extends FormRequest
+class AuthorizationRequest extends ApiRequest
 {
     public function rules()
     {
