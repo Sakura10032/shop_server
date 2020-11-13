@@ -16,7 +16,7 @@ class CreateUserLogsTable extends Migration
     {
         Schema::create('user_logs', function (Blueprint $table) {
             $table->bigIncrements('id')->comment('主键ID');
-            $table->bigInteger('site_id')->comment('站点ID');
+            $table->uuid('site_id')->comment('站点ID');
             $table->bigInteger('user_id')->comment('用户ID');
             $table->string('log')->comment('日志内容');
             $table->string('log_data')->comment('日志数据');

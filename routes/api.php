@@ -25,6 +25,8 @@ Route::prefix('v1')
         Route::group(['prefix' => 'auth'], function () {
             // 用户注册
             Route::post('register', 'RegisterController@store');
+            // 初始化网站
+            Route::post('init', 'InitController@index');
             // 用户登录
             Route::post('login', 'AuthorizationRController@login');
             // 初始化网站

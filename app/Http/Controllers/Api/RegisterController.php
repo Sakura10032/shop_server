@@ -8,7 +8,9 @@ use App\Models\Site;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
@@ -27,13 +29,15 @@ class RegisterController extends Controller
     {
         DB::beginTransaction();
         try {
+            $uuid = Str::orderedUuid()->toString();
+            $site->id = $uuid;
             $site->mobile = $request->mobile;
             $site->name = $request->site_name;
             $site->reg_time = date("Y-m-d H:i:s");
             $site->try_time = date("Y-m-d H:i:s", strtotime("+15 day")); // 试用时间 15 天
             $site->reg_ip = $request->getHost();
             $site->save();
-            $user->site_id = $site->id;
+            $user->site_id = $uuid;
             $user->account = $request->mobile;
             $user->pwd = bcrypt($request->pwd);
             $user->role = 2;
@@ -42,6 +46,16 @@ class RegisterController extends Controller
             $user->reg_time = date("Y-m-d H:i:s");
             $user->login_ip = ''; // 默认 ip 为未登录
             $user->save();
+
+            // 生成初始化注册码  时效 5 分钟
+            if (!app()->environment('production')) {
+                $key = 'shop.register-123456789';
+                $expiredAt = now()->addMinutes(60);
+            }else{
+                $key = 'shop.register-'.Str::random(20);
+                $expiredAt = now()->addMinutes(5);
+            }
+            Cache::put($key, ['site_id' => $uuid], $expiredAt);
             DB::commit();
         } catch (Exception $e) {
             DB::rollBack();
@@ -51,37 +65,9 @@ class RegisterController extends Controller
         }
 
         return response()->json([
-            'message' => '注册成功！'
-        ], 200);
+            'register_key' => $key,
+            'expired_at' => $expiredAt->toDateTimeString(),
+        ], 201);
     }
 
-    public function me()
-    {
-        return response()->json(auth('api')->user());
-    }
-
-    public function logout()
-    {
-        auth('api')->logout();
-
-        return response()->json(['message' => 'Successfully logged out']);
-    }
-
-    public function refresh()
-    {
-        return $this->respondWithToken(auth('api')->refresh());
-    }
-
-    /**
-     * @param $token
-     * @return JsonResponse
-     */
-    protected function respondWithToken($token)
-    {
-        return response()->json([
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => auth('api')->factory()->getTTL() * 60
-        ]);
-    }
 }

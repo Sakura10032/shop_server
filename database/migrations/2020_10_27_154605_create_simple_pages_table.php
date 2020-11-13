@@ -16,7 +16,7 @@ class CreateSimplePagesTable extends Migration
     {
         Schema::create('simple_pages', function (Blueprint $table) {
             $table->bigIncrements('id')->comment('主键ID');
-            $table->bigInteger('site_id')->comment('站点ID');
+            $table->uuid('site_id')->comment('站点ID');
             $table->string('title')->comment('标题');
             $table->bigInteger('category_id')->comment('分类 ID');
             $table->longText('content')->nullable()->comment('内容');

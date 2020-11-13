@@ -16,7 +16,7 @@ class CreateImageHashTable extends Migration
     {
         Schema::create('image_hash', function (Blueprint $table) {
             $table->bigIncrements('id')->comment('主键ID');
-            $table->bigInteger('site_id')->comment('站点ID');
+            $table->uuid('site_id')->comment('站点ID');
             $table->bigInteger('category_id')->comment('分类ID');
             $table->string('url')->comment('图片地址');
             $table->integer('sort')->default(50)->comment('排序');

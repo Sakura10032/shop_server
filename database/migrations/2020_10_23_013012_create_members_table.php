@@ -27,7 +27,7 @@ class CreateMembersTable extends Migration
             $table->string('contact_way')->nullable()->comment('其他联系方式');
             $table->string('pwd')->comment('密码');
             $table->tinyInteger('status')->default(1)->comment('会员状态 1为启用 2为禁用');
-            $table->bigInteger('site_id')->comment('站点ID');
+            $table->uuid('site_id')->comment('站点ID');
             $table->timestamp('reg_time')->useCurrent()->comment('注册时间');
             $table->timestamp('login_time')->nullable()->comment('最后登录时间');
             $table->char('reg_ip', 20)->nullable()->comment('注册IP');
