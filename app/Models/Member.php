@@ -19,7 +19,7 @@ class Member extends Auth implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'email', 'pwd',
+        'email', 'pwd', 'site_id', 'name', 'gender', 'age', 'mobile', 'fax', 'birthday', 'company', 'contact_way', 'status', 'login_time', 'login_ip', 'reg_ip'
     ];
 
     /**

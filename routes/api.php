@@ -36,4 +36,9 @@ Route::prefix('v1')
             // 用户刷新 TOKEN
             Route::put('', 'AuthorizationRController@refresh');
         });
+
+        // 成员
+        Route::group(['prefix' => 'member'], function () {
+            Route::post('', 'MemberController@store');
+        });
     });
