@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,7 +20,7 @@ Route::prefix('v1')
     ->group(static function () {
         // 测试路由
         Route::get('test', 'IndexController@index');
-        // 用户
+        // 用户模块
         Route::group(['prefix' => 'auth'], function () {
             // 用户注册
             Route::post('register', 'RegisterController@store');
@@ -37,8 +36,12 @@ Route::prefix('v1')
             Route::put('', 'AuthorizationRController@refresh');
         });
 
-        // 成员
+        // 网站会员模块
         Route::group(['prefix' => 'member'], function () {
+            // 添加网站会员
             Route::post('', 'MemberController@store');
+
+            // 网站会员列表
+            Route::get('', 'MemberController@index');
         });
     });

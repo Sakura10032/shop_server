@@ -8,6 +8,9 @@ use App\Http\Resources\Api\MemberResource;
 use App\Models\Member;
 use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Spatie\QueryBuilder\QueryBuilder;
+use Spatie\QueryBuilder\AllowedFilter;
 
 class MemberController extends Controller
 {
@@ -41,10 +44,18 @@ class MemberController extends Controller
     /**
      * @param MemberRequest $request
      * @param Member $member
+     * @return AnonymousResourceCollection
      */
     public function index(MemberRequest $request, Member $member)
     {
-        $siteId = $request->auth['id'] ?: 1;
-        $email = $request->email ?: '';
+        $members = QueryBuilder::for(Member::class)
+            ->allowedFilters([
+                'email',
+                AllowedFilter::exact('mobile'),
+            ])
+            ->allowedFields(['id', 'name', 'email', 'gender', 'mobile', 'company', 'contact_way', 'status', 'reg_time', 'login_time', 'login_ip'])
+            ->paginate(2);
+
+        return MemberResource::collection($members);
     }
 }

@@ -13,10 +13,16 @@ class MemberRequest extends ApiRequest
      */
     public function rules()
     {
-        return [
-            'email' => 'email:rfc|required',
-            'pwd' => 'required',
-        ];
+        switch ($this->method()) {
+            case 'POST':
+                return [
+                    'email' => 'email:rfc|required',
+                    'pwd' => 'required',
+                ];
+            case 'GET':
+            case 'PUT':
+                return [];
+        }
     }
 
     public function messages()
