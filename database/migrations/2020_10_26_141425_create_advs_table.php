@@ -16,7 +16,7 @@ class CreateAdvsTable extends Migration
     {
         Schema::create('advs', function (Blueprint $table) {
             $table->bigIncrements('id')->comment('主键ID');
-            $table->uuid('site_id')->comment('站点ID');
+            $table->integer('site_id')->comment('站点ID');
             $table->bigInteger('type_id')->comment('页面类型');
             $table->string('title')->comment('标题');
             $table->string('about')->comment('简介');

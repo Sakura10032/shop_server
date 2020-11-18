@@ -17,7 +17,7 @@ class CreateCaseCategoriesTable extends Migration
         Schema::create('case_categories', function (Blueprint $table) {
             $table->bigIncrements('id')->comment('主键ID');
             $table->bigInteger('pid')->comment('父ID');
-            $table->uuid('site_id')->comment('站点ID');
+            $table->integer('site_id')->comment('站点ID');
             $table->string('name')->comment('名称 序列化数据包括各种语言数据');
             $table->integer('sort')->default(50)->comment('排序');
             $table->timestamps();

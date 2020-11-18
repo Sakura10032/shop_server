@@ -16,7 +16,7 @@ class CreateNavsTable extends Migration
     {
         Schema::create('navs', function (Blueprint $table) {
             $table->bigIncrements('id')->comment('主键ID');
-            $table->uuid('site_id')->comment('站点ID');
+            $table->integer('site_id')->comment('站点ID');
             $table->tinyInteger('adr')->default(1)->comment('导航位置 1为头部 2为底部 3顶部');
             $table->bigInteger('type_id')->comment('页面类型');
             $table->timestamps();

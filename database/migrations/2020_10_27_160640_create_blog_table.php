@@ -16,7 +16,7 @@ class CreateBlogTable extends Migration
     {
         Schema::create('blog', function (Blueprint $table) {
             $table->bigIncrements('id')->comment('主键ID');
-            $table->uuid('site_id')->comment('站点ID');
+            $table->integer('site_id')->comment('站点ID');
             $table->char('title')->comment('标题');
             $table->char('about', 150)->nullable()->comment('简介');
             $table->longText('nav')->comment('导航 序列化多个导航数据');

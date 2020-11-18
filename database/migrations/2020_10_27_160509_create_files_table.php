@@ -16,7 +16,7 @@ class CreateFilesTable extends Migration
     {
         Schema::create('files', function (Blueprint $table) {
             $table->bigIncrements('id')->comment('主键ID');
-            $table->uuid('site_id')->comment('站点ID');
+            $table->integer('site_id')->comment('站点ID');
             $table->bigInteger('category_id')->comment('分类 ID');
             $table->string('name')->comment('名称');
             $table->tinyInteger('is_visible')->default(2)->comment('是否会员可见 1为显示 2为不显示');

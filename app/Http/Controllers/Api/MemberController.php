@@ -9,8 +9,8 @@ use App\Models\Member;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class MemberController extends Controller
 {
@@ -18,6 +18,8 @@ class MemberController extends Controller
 
 
     /**
+     * 添加网站会员
+     *
      * @param Member $member
      * @param MemberRequest $request
      * @return MemberResource|JsonResponse
@@ -42,20 +44,61 @@ class MemberController extends Controller
 
 
     /**
-     * @param MemberRequest $request
-     * @param Member $member
+     * 网站会员列表
+     *
      * @return AnonymousResourceCollection
      */
-    public function index(MemberRequest $request, Member $member)
+    public function index()
     {
         $members = QueryBuilder::for(Member::class)
+            ->allowedFields(['id', 'name', 'email', 'gender', 'mobile', 'company', 'contact_way', 'status', 'reg_time', 'login_time', 'login_ip', 'site_id', 'site.id', 'site.uuid', 'site.name'])
+            ->allowedIncludes('site')
             ->allowedFilters([
                 'email',
                 AllowedFilter::exact('mobile'),
             ])
-            ->allowedFields(['id', 'name', 'email', 'gender', 'mobile', 'company', 'contact_way', 'status', 'reg_time', 'login_time', 'login_ip'])
-            ->paginate(2);
+            ->paginate(15);
 
         return MemberResource::collection($members);
+    }
+
+
+    /**
+     * 网站会员详情
+     *
+     * @param $memberId
+     * @return MemberResource
+     */
+    public function show($memberId)
+    {
+        $member = QueryBuilder::for(Member::class)
+            ->allowedFields('site_id', 'site.id', 'site.uuid', 'site.name')
+            ->allowedIncludes('site')
+            ->findOrFail($memberId);
+
+        return new MemberResource($member);
+    }
+
+
+    /**
+     * 更新网址会员信息
+     *
+     * @param MemberRequest $request
+     * @param Member $member
+     * @return MemberResource
+     */
+    public function update(MemberRequest $request,Member $member)
+    {
+        $member->update($request->all());
+        return new MemberResource($member);
+    }
+
+
+    public function destroy(Member $member)
+    {
+
+        $member->delete();
+
+        return response(null, 204);
     }
 }

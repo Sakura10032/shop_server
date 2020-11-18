@@ -30,14 +30,14 @@ class RegisterController extends Controller
         DB::beginTransaction();
         try {
             $uuid = Str::orderedUuid()->toString();
-            $site->id = $uuid;
+            $site->uuid = $uuid;
             $site->mobile = $request->mobile;
             $site->name = $request->site_name;
             $site->reg_time = date("Y-m-d H:i:s");
             $site->try_time = date("Y-m-d H:i:s", strtotime("+15 day")); // 试用时间 15 天
             $site->reg_ip = $request->getHost();
             $site->save();
-            $user->site_id = $uuid;
+            $user->site_id = $site->id;
             $user->account = $request->mobile;
             $user->pwd = bcrypt($request->pwd);
             $user->role = 2;

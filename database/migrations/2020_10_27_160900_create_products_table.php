@@ -16,7 +16,7 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->bigIncrements('id')->comment('主键ID');
-            $table->uuid('site_id')->comment('站点ID');
+            $table->integer('site_id')->comment('站点ID');
             $table->string('name')->comment('名称');
             $table->bigInteger('category_id')->comment('分类 ID');
             $table->string('number')->comment('编号 ');

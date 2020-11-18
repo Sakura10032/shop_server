@@ -43,5 +43,8 @@ Route::prefix('v1')
 
             // 网站会员列表
             Route::get('', 'MemberController@index');
+
+            // 网站会员详情
+            Route::get('{memberId}', 'MemberController@show');
         });
     });

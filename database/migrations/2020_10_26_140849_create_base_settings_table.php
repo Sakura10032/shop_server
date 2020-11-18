@@ -16,7 +16,7 @@ class CreateBaseSettingsTable extends Migration
     {
         Schema::create('base_settings', function (Blueprint $table) {
             $table->bigIncrements('id')->comment('主键ID');
-            $table->uuid('site_id')->comment('站点ID');
+            $table->integer('site_id')->comment('站点ID');
             $table->string('logo')->comment('logo地址');
             $table->string('ico')->comment('ico图标地址');
             $table->tinyInteger('message_status')->default(2)->comment('开启底部留言 1开启 2关闭');

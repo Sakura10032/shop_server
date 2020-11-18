@@ -22,7 +22,7 @@ class InitController extends Controller
             abort(403, '初始化注册码无效，请联系管理员！');
         }
 
-        $site = $site->find($registerData['site_id']);
+        $site = $site->where('uuid',$registerData['site_id'])->first();
         if ($site->initialize === 1) {
             abort(403, '请勿重复初始化！');
         }
@@ -30,7 +30,7 @@ class InitController extends Controller
         // 启用事务
         DB::beginTransaction();
         try {
-            $baseSetting->site_id = $registerData['site_id'];
+            $baseSetting->site_id = $site->id;
             $baseSetting->logo = '11'; // 默认初始化logo地址
             $baseSetting->ico = '11'; // 默认初始化ico地址
             $baseSetting->search_message = '请输入产品名称~'; // 产品搜索提示语
@@ -39,6 +39,7 @@ class InitController extends Controller
             $baseSetting->company = '朗正集成信息科技（南京）有限公司'; // 公司名称
             $baseSetting->save();
             $site->initialize = 1;
+            $site->base_id = $baseSetting->id;
             $site->save();
             DB::commit();
         } catch (Exception $e) {

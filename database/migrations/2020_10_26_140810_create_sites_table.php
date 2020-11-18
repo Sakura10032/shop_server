@@ -15,7 +15,8 @@ class CreateSitesTable extends Migration
     public function up()
     {
         Schema::create('sites', function (Blueprint $table) {
-            $table->uuid('id')->primary()->comment('主键ID');
+            $table->bigIncrements('id')->comment('主键id');
+            $table->uuid('uuid')->index()->comment('uuid');
             $table->string('name', 100)->comment('站点名称');
             $table->string('mobile', 20)->unique()->comment('站点注册手机号');
             $table->tinyInteger('status')->default(2)->comment('状态 1为启用 2为禁用');

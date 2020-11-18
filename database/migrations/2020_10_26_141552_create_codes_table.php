@@ -16,7 +16,7 @@ class CreateCodesTable extends Migration
     {
         Schema::create('codes', function (Blueprint $table) {
             $table->bigIncrements('id')->comment('主键ID');
-            $table->uuid('site_id')->comment('站点ID');
+            $table->integer('site_id')->comment('站点ID');
             $table->string('title', 100)->comment('姓名');
             $table->string('about')->nullable()->comment('简介');
             $table->longText('code')->nullable()->comment('代码内容');

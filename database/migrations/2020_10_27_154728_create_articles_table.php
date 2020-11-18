@@ -16,7 +16,7 @@ class CreateArticlesTable extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->bigIncrements('id')->comment('主键ID');
-            $table->uuid('site_id')->comment('站点ID');
+            $table->integer('site_id')->comment('站点ID');
             $table->string('title')->comment('标题');
             $table->bigInteger('category_id')->comment('分类 ID');
             $table->char('author', 10)->nullable()->comment('作者');

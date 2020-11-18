@@ -16,7 +16,7 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id')->comment('主键ID');
-            $table->uuid('site_id')->comment('站点ID');
+            $table->integer('site_id')->comment('站点ID');
             $table->string('account')->comment('账号');
             $table->string('pwd')->comment('密码');
             $table->tinyInteger('role')->default(1)->comment('角色 1为普通管理员 2为超级管理员');
