@@ -7,8 +7,11 @@ use App\Http\Requests\Api\MemberRequest;
 use App\Http\Resources\Api\MemberResource;
 use App\Models\Member;
 use Exception;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Response;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
@@ -87,17 +90,27 @@ class MemberController extends Controller
      * @param Member $member
      * @return MemberResource
      */
-    public function update(MemberRequest $request,Member $member)
+    public function update(MemberRequest $request,Member $member): MemberResource
     {
+        $member = $member->find($request->id);
+        if ($request->pwd !== '') {
+            $request->merge(['pwd' => bcrypt($request->pwd)]);
+        }
         $member->update($request->all());
         return new MemberResource($member);
     }
 
 
-    public function destroy(Member $member)
+    /**
+     * 删除网站会员信息
+     *
+     * @param Member $member
+     * @param $id
+     * @return Application|ResponseFactory|Response
+     */
+    public function destroy(Member $member, $id)
     {
-
-        $member->delete();
+        $member->destroy($id);
 
         return response(null, 204);
     }

@@ -16,7 +16,7 @@ class User extends Auth implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'pwd','site_id'
+        'id', 'account', 'pwd', 'site_id', 'account', 'role', 'status', 'permission', 'reg_time', 'login_ip', 'created_at', 'updated_at'
     ];
 
     /**
@@ -25,7 +25,7 @@ class User extends Auth implements JWTSubject
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
     ];
 
     /**

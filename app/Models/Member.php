@@ -19,7 +19,7 @@ class Member extends Auth implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'email', 'pwd', 'site_id', 'name', 'gender', 'age', 'mobile', 'fax', 'birthday', 'company', 'contact_way', 'status', 'login_time', 'login_ip', 'reg_ip'
+        'id', 'email', 'pwd', 'site_id', 'name', 'gender', 'age', 'mobile', 'fax', 'birthday', 'company', 'contact_way', 'status', 'login_time', 'login_ip', 'reg_ip', 'created_at', 'updated_at'
     ];
 
     /**
@@ -46,7 +46,7 @@ class Member extends Auth implements JWTSubject
      */
     public function getJWTCustomClaims()
     {
-        return ['role' => 'user'];
+        return ['role' => 'member'];
     }
 
     /**

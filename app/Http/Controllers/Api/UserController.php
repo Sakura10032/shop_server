@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\UserRequest;
@@ -8,37 +8,32 @@ use App\Http\Resources\Api\UserResource;
 use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class UserController extends Controller
 {
     /**
      * 后台 用户列表
-     * @param User $user
-     * @return Application|ResponseFactory|Response
+     *
+     * @return AnonymousResourceCollection
      */
-    public function index(User $user)
+    public function index()
     {
-        $ids = ProcuratorateController::getAllPId();
-        $size = request()->get('size', 20);
-        $name = request()->get('name', '');
-        $info = $user
-            ->from('admins as a')
-            ->leftJoin('procuratorates as p', 'a.procuratorate_id', '=', 'p.id')
-            ->select('a.id', 'a.username', 'a.procuratorate_id', 'a.group_id', 'a.status', 'a.sort', 'p.name')
-            ->whereIn('a.procuratorate_id', $ids);
-        if ($name) {
-            $info = $info->where('a.username', 'like', '%' . $name . '%');
-        }
-        $info = $info->orderBy('a.sort', 'asc')
-            ->orderBy('a.created_at', 'desc')
-            ->paginate($size);
-        return response($info, 200);
+        $users = QueryBuilder::for(User::class)
+            ->allowedFields(['id', 'account', 'role', 'status', 'permission', 'reg_time', 'login_ip', 'site_id', 'created_at'])
+            ->allowedFilters([
+                'account'
+            ])
+            ->paginate(15);
+
+        return UserResource::collection($users);
     }
 
     /**
-     * 新增管理员
+     * 新增后台用户
      *
      * @param UserRequest $request
      * @param User $user
@@ -55,7 +50,7 @@ class UserController extends Controller
 
 
     /**
-     * 删除管理员
+     * 删除后台用户
      *
      * @param $id
      * @return Application|ResponseFactory|Response
@@ -76,7 +71,7 @@ class UserController extends Controller
 
 
     /**
-     * 修改管理员
+     * 修改后台用户
      *
      * @param UserRequest $request
      * @param User $user

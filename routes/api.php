@@ -46,5 +46,21 @@ Route::prefix('v1')
 
             // 网站会员详情
             Route::get('{memberId}', 'MemberController@show');
+
+            // 网站会员更新
+            Route::patch('', 'MemberController@update');
+
+            // 网站会员删除
+            Route::delete('{id}', 'MemberController@destroy');
+        });
+
+        // 后台用户模块
+        Route::group(['prefix' => 'user'], function () {
+            // 添加网站会员
+            Route::post('', 'UserController@store');
+
+            // 网站会员列表
+            Route::get('', 'UserController@index');
+
         });
     });
