@@ -16,12 +16,11 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('v1')
     ->namespace('Api')
     ->name('api.v1.')
-    ->middleware('json')
     ->group(static function () {
         // 测试路由
         Route::get('test', 'IndexController@index');
         // 用户模块
-        Route::group(['prefix' => 'auth'], function () {
+        Route::middleware(['auth:api'])->prefix('auth')->group(function () {
             // 用户注册
             Route::post('register', 'RegisterController@store');
             // 初始化网站

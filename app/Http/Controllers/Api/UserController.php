@@ -22,6 +22,7 @@ class UserController extends Controller
      */
     public function index()
     {
+        dd(Auth::user());
         $users = QueryBuilder::for(User::class)
             ->allowedFields(['id', 'account', 'role', 'status', 'permission', 'reg_time', 'login_ip', 'site_id', 'created_at'])
             ->allowedFilters([

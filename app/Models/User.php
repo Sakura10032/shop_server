@@ -25,7 +25,7 @@ class User extends Auth implements JWTSubject
      * @var array
      */
     protected $hidden = [
-        'password',
+        'pwd',
     ];
 
     /**
@@ -38,11 +38,21 @@ class User extends Auth implements JWTSubject
     }
 
     /**
+     * Get the password for the user.
+     *
+     * @return string
+     */
+    public function getAuthPassword()
+    {
+        return $this->pwd;
+    }
+
+    /**
      * 返回包含要添加到 jwt 声明中的自定义键值对数组
      * @return array
      */
     public function getJWTCustomClaims()
     {
-        return ['role' => 'admin'];
+        return ['role' => 'user'];
     }
 }

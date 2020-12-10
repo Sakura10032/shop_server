@@ -6,12 +6,9 @@ use Illuminate\Foundation\Auth\User as Auth;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class Member extends Auth implements JWTSubject
+class Admin extends Auth implements JWTSubject
 {
     use Notifiable;
-
-    protected $table = 'members';
-    public $timestamps = true;
 
     /**
      * The attributes that are mass assignable.
@@ -19,7 +16,7 @@ class Member extends Auth implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'id', 'email', 'pwd', 'site_id', 'name', 'gender', 'age', 'mobile', 'fax', 'birthday', 'company', 'contact_way', 'status', 'login_time', 'login_ip', 'reg_ip', 'created_at', 'updated_at'
+        'id', 'account', 'pwd', 'site_id', 'account', 'role', 'status', 'permission', 'reg_time', 'login_ip', 'created_at', 'updated_at'
     ];
 
     /**
@@ -28,7 +25,7 @@ class Member extends Auth implements JWTSubject
      * @var array
      */
     protected $hidden = [
-        'pwd',
+        'password',
     ];
 
     /**
@@ -46,22 +43,6 @@ class Member extends Auth implements JWTSubject
      */
     public function getJWTCustomClaims()
     {
-        return ['role' => 'index'];
-    }
-
-    /**
-     * Get the password for the user.
-     *
-     * @return string
-     */
-    public function getAuthPassword()
-    {
-        return $this->pwd;
-    }
-
-
-    public function site()
-    {
-        return $this->hasOne(Site::class, 'id', 'site_id');
+        return ['role' => 'admin'];
     }
 }

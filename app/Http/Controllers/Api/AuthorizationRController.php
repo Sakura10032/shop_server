@@ -19,7 +19,7 @@ class AuthorizationRController extends Controller
      */
     public function login(AuthorizationRequest $request): JsonResponse
     {
-        $credentials = $request->only(['email', 'password']);
+        $credentials = $request->only(['account', 'password']);
 
         if (!$token = auth('api')->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
@@ -53,7 +53,7 @@ class AuthorizationRController extends Controller
     {
         return response()->json([
             'access_token' => $token,
-            'token_type' => 'bearer',
+            'token_type' => 'Bearer',
             'expires_in' => auth('api')->factory()->getTTL() * 60
         ]);
     }

@@ -45,6 +45,11 @@ return [
             'driver' => 'jwt',  // 默认是 token
             'provider' => 'users',
         ],
+
+        'index' => [
+            'driver' => 'jwt',  // 默认是 token
+            'provider' => 'members',
+        ],
         // 新增admins 模块
         'admin' => [
             'driver' => 'jwt',
@@ -72,11 +77,15 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Member::class,
+            'model' => App\Models\User::class,
         ],
         'admins' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+            'model' => App\Models\Admin::class,
+        ],
+        'members' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Member::class,
         ]
     ],
 
